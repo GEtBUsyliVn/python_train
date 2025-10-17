@@ -1,0 +1,22 @@
+[project]
+name = "pipi"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "AlekKar",email = "aleksandr.kargapoltsev@inex-digital.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "requests (>=2.32.5,<3.0.0)",
+    "pydantic (>=2.12.3,<3.0.0)",
+    "fastapi (>=0.119.0,<0.120.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "pyjwt (>=2.10.1,<3.0.0)",
+    "pydantic-settings (>=2.11.0,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
