@@ -6,11 +6,12 @@ class ConfigJWT(BaseModel):
     expires_at:int = 1
 
 class ConfigVault(BaseModel):
-    url:str = 'https://127.0.0.1:8200'
+    url:str = 'http://172.17.0.5:8200'
     version_prefix:str = '/v1'
+    engine:str= '/cubbyhole'
 
 class ConfigPvtKey(ConfigVault):
-    path_to_secret:str = '/secret/data/scrt'
+    path_to_secret:str = '/pvt_key'
     secret_version:str = '1'
 
 class ConfigPubKey(ConfigVault):
