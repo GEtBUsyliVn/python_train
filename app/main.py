@@ -1,6 +1,5 @@
 
-import jwt
-from fastapi import FastAPI
+from fastapi import FastAPI,HTTPException
 
 from config import Settings
 from jwt_helpers import JwtHelpers
@@ -18,12 +17,15 @@ jwt_helpers = JwtHelpers(settings, v_helpers)
 
 @app.post("/auth")
 def auth(usr:UserAuth):
+
     encoded = jwt_helpers.encode_jwt(usr)
+    if encoded is None:
+        raise HTTPException(status_code=500, detail="Error encoding token")
     return {"token":encoded}
 
 @app.post("/auth/decode")
 def decode_token(tok:Tok):
-    decoded = jwt.decode(tok.tok, v_helpers.get_public_secret(), algorithms=["RS256"])
+    decoded = jwt_helpers.decode_jwt(tok.tok)
     return decoded
 
 

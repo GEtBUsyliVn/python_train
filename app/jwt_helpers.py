@@ -20,7 +20,11 @@ class JwtHelpers:
         to_encode.update(
             exp=datetime.now(tz=timezone.utc)+timedelta(hours=self.settings.auth_jwt.expires_at)
         )
-        encoded = jwt.encode(to_encode, self.v_helpers.get_private_secret(), algorithm="RS256")
+        secret = self.v_helpers.get_private_secret()
+        if secret is None:
+            return None
+
+        encoded = jwt.encode(to_encode, secret, algorithm="RS256")
 
         return encoded
 
