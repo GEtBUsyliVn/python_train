@@ -14,13 +14,13 @@ class JwtHelpers:
         self.settings = settings
         self.v_helpers = v_helpers
 
-    def encode_jwt(self,usr:UserAuth):
+    def encode_jwt(self,usr:UserAuth,read_from_file:bool=False):
         to_encode = usr.model_dump().copy()
 
         to_encode.update(
             exp=datetime.now(tz=timezone.utc)+timedelta(hours=self.settings.auth_jwt.expires_at)
         )
-        secret = self.v_helpers.get_private_secret()
+        secret = self.v_helpers.get_private_secret(read_from_file)
         if secret is None:
             return None
 
@@ -28,6 +28,6 @@ class JwtHelpers:
 
         return encoded
 
-    def decode_jwt(self,token:str):
-        decoded = jwt.decode(token, self.v_helpers.get_public_secret(), algorithms=["RS256"])
+    def decode_jwt(self,token:str,read_from_file:bool=False):
+        decoded = jwt.decode(token, self.v_helpers.get_public_secret(read_from_file), algorithms=["RS256"])
         return decoded
